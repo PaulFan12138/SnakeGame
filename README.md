@@ -10,3 +10,6 @@ when you touch body or wall, GameOver
 
 version1.1
 add restart
+
+version1.2
+add game score
