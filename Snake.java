@@ -21,6 +21,7 @@ public class Snake extends GameEngine implements KeyListener, ActionListener{
             createGame(new Snake());
         }
         int snake_Length = 3;
+        int score = 0;
         //boolean the left,right,up,down keyboard
         boolean left, right, up, down;
         boolean gameOver;
@@ -30,6 +31,7 @@ public class Snake extends GameEngine implements KeyListener, ActionListener{
 
         double apple_positionX, apple_positionY;
         List<Point> snake_body;
+        List<Point> gamescore;
 
         double snake_positionX, snake_positionY;
 
@@ -61,10 +63,14 @@ public class Snake extends GameEngine implements KeyListener, ActionListener{
             up = false;
             down = false;
             snake_Length = 3;
+            score = 0;
 
             snake_body = new ArrayList<>();
             for (int i = 0; i < snake_Length; i++) {
                 snake_body.add(new Point((int) snake_positionX - i * 10, (int) snake_positionY));
+            }
+            if (snake_Length > 3){
+                score++;
             }
             //load the image at resources folder
             apple = loadImage("Assignment 1/resources/apple.png");
@@ -94,6 +100,7 @@ public class Snake extends GameEngine implements KeyListener, ActionListener{
                 if (Math.abs(snake_positionX - apple_positionX) < 10 && Math.abs(snake_positionY - apple_positionY) < 10) {
                     randomApple();
                     snake_Length++;
+                    score++;
                     snake_body.add(new Point((int) apple_positionX, (int) apple_positionY));
                 }
                 // Check if snake hit the wall
@@ -125,6 +132,7 @@ public class Snake extends GameEngine implements KeyListener, ActionListener{
             } else {
                 changeColor(Color.black);
                 drawText(80, 200, "Game Over!", "Arial", 30);
+                drawText(80,230,"Your final score is "+ score,"Arial",30);
             }
             if (!paused) {
                 for (int i = 1; i < Math.min(snake_body.size(), 20); i++) {
@@ -134,6 +142,15 @@ public class Snake extends GameEngine implements KeyListener, ActionListener{
             } else {
                 changeColor(Color.red);
                 drawText(120, 50, "Game Pause!", "Arial", 30);
+            }
+            if (gameOver){
+                for (int i = 1; i < Math.min(snake_body.size(), 20); i++) {
+                    Point p = snake_body.get(i);
+                    drawImage(snake_body_image, p.x, p.y);
+                }
+            }else {
+                changeColor(Color.orange);
+                drawText(30,30,"Game score : "+score,"Arial",20);
             }
         }
 
@@ -149,7 +166,6 @@ public class Snake extends GameEngine implements KeyListener, ActionListener{
         }
         public boolean restart () {
          if (snake_Length >= 20){
-            q
             snake_body.clear();
             for (int i = 0; i < snake_Length; i++) {
                 snake_body.add(new Point((int) snake_positionX - i * 10, (int) snake_positionY));
@@ -217,8 +233,6 @@ public class Snake extends GameEngine implements KeyListener, ActionListener{
                 init();
             } else {
                 clearBackground(500, 500);
-                changeColor(Color.red);
-                drawText(50, 200, "Restart the game", "Arial", 50);
             }
         }
     }
