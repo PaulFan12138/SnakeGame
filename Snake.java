@@ -105,6 +105,9 @@ public class Snake extends GameEngine implements KeyListener, ActionListener{
                 if (check_touch()) {
                     gameOver = true;
                 }
+                if (restart()){
+                    init();
+                }
             }
         }
 
@@ -144,12 +147,23 @@ public class Snake extends GameEngine implements KeyListener, ActionListener{
             }
             return false;
         }
-
         public boolean restart () {
-            return snake_Length == 20;
-        }
+         if (snake_Length >= 20){
+            q
+            snake_body.clear();
+            for (int i = 0; i < snake_Length; i++) {
+                snake_body.add(new Point((int) snake_positionX - i * 10, (int) snake_positionY));
+            }
+            direction = Direction.RIGHT;
+            snake_speed = 10;
+            randomApple();
+            return true;
+         } else {
+            return false;
+         }
+    }
 
-        //keyboard control
+    //keyboard control
         public void keyPressed (KeyEvent e){
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                 direction = Direction.LEFT;
@@ -200,7 +214,6 @@ public class Snake extends GameEngine implements KeyListener, ActionListener{
                 timer.stop();
             }
             if (restart()) {
-                timer.stop();
                 init();
             } else {
                 clearBackground(500, 500);
