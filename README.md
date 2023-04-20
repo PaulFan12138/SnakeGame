@@ -8,3 +8,5 @@ when you touch body or wall, GameOver
 //want to add restart(Enter)
 //want to add menu to let player choose start or quit game
 
+version1.1
+add restart
